@@ -9,6 +9,12 @@ import {
 import React, { useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, Input, Text } from "@rneui/base";
+import { auth } from "../firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  getAuth,
+} from "firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -22,7 +28,19 @@ const RegisterScreen = ({ navigation }) => {
     });
   });
 
-  const register = () => {};
+  const register = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((authUser) => {
+        const user = authUser.user;
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL:
+            imageUrl ||
+            `https://avatar.iran.liara.run/public/boy?username=${email}`,
+        });
+      })
+      .catch((error) => alert(error.message));
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
