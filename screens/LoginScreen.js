@@ -3,6 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -59,6 +60,7 @@ const LoginScreen = ({ navigation }) => {
               placeholder="Email"
               type="email"
               value={email}
+              textContentType="oneTimeCode"
               onChangeText={(text) => setEmail(text)}
             />
             <Input
@@ -66,6 +68,7 @@ const LoginScreen = ({ navigation }) => {
               secureTextEntry
               type="password"
               value={password}
+              textContentType="oneTimeCode"
               onChangeText={(text) => setPassword(text)}
               onSubmitEditing={signIn}
             />

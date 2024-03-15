@@ -4,10 +4,10 @@ import { ListItem, Avatar } from "@rneui/themed";
 
 const CustomListItem = ({ id, chatName, enterChat }) => {
   return (
-    <ListItem>
+    <ListItem key={id} onPress={() => enterChat(id, chatName)}>
       <Avatar rounded source={require("../assets/userPlaceholder.png")} />
       <ListItem.Content>
-        <ListItem.Title>John Doe</ListItem.Title>
+        <ListItem.Title>{chatName}</ListItem.Title>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
           Conversation summary
         </ListItem.Subtitle>
