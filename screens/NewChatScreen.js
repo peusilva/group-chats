@@ -3,17 +3,19 @@ import React, { useLayoutEffect, useState } from "react";
 import { Icon, Input } from "@rneui/themed";
 import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+import { Button } from "@rneui/base";
 
 const NewChatScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Chats",
-      headerRight: () => (
-        <TouchableOpacity onPress={createNewChat} activeOpacity={0.5}>
-          <Text style={{ marginRight: 20, fontSize: 17 }}>Done</Text>
-        </TouchableOpacity>
-      ),
+      //   headerRight: () => (
+      //     // <TouchableOpacity onPress={createNewChat} activeOpacity={0.5}>
+      //     //   <Text style={{ marginRight: 20, fontSize: 17 }}>Done</Text>
+      //     // </TouchableOpacity>
+      //   // ),
     });
   }, []);
 
@@ -29,7 +31,7 @@ const NewChatScreen = ({ navigation }) => {
       alert(error.message);
     }
   };
-
+  console.log(input);
   return (
     <View style={styles.container}>
       <Input
@@ -46,6 +48,15 @@ const NewChatScreen = ({ navigation }) => {
             style={{ marginRight: 10 }}
           />
         }
+      />
+      <Button
+        containerStyle={styles.button}
+        buttonStyle={{ borderRadius: 0 }}
+        titleStyle={{ color: "black" }}
+        disabled={input.length < 3}
+        type="outline"
+        title="Create new Chat"
+        onPress={createNewChat}
       />
     </View>
   );
