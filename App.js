@@ -20,6 +20,10 @@ const GlobalScreenOptions = {
     fontWeight: "bold",
   },
   headerTitle: "",
+  headerTitleStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
   headerShadowVisible: false,
 };
 

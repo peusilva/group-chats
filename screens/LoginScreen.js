@@ -38,6 +38,11 @@ const LoginScreen = ({ navigation }) => {
         alert(errorMessage, errorCode);
       });
   };
+  const dimissKeyboard = () => {
+    if (Platform.OS !== "web") {
+      Keyboard.dismiss();
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -45,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
       style={styles.container}
     >
       <StatusBar style="auto" />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={dimissKeyboard}>
         <View style={styles.container}>
           <Image
             source={require("../assets/chat-bubbles.png")}

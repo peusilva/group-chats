@@ -10,7 +10,7 @@ import { auth } from "../firebaseConfig";
 import { signOut } from "firebase/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomListItem from "../components/CustomListItem";
-import { Avatar } from "@rneui/themed";
+import { Avatar, Image } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
             style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
           >
             <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }} />
-            <Text>Log out</Text>
+            <Text style={{ fontWeight: "bold" }}>Log out</Text>
           </TouchableOpacity>
         </View>
       ),
@@ -51,7 +51,10 @@ const HomeScreen = ({ navigation }) => {
             activeOpacity={0.5}
             onPress={() => navigation.navigate("NewChat")}
           >
-            <AntDesign name="pluscircleo" size={24} color="black" />
+            <Image
+              source={require("../assets/icons8-plus-24.png")}
+              style={{ width: 20, height: 20 }}
+            />
           </TouchableOpacity>
         </View>
       ),
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
-    marginTop: 45,
+    marginTop: 55,
   },
   chatsContainer: {
     flex: 1,

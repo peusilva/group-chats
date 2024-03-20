@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
-import { Icon, Input } from "@rneui/themed";
+import { Icon, Image, Input } from "@rneui/themed";
 import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import { Button } from "@rneui/base";
@@ -11,11 +11,21 @@ const NewChatScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Chats",
-      //   headerRight: () => (
-      //     // <TouchableOpacity onPress={createNewChat} activeOpacity={0.5}>
-      //     //   <Text style={{ marginRight: 20, fontSize: 17 }}>Done</Text>
-      //     // </TouchableOpacity>
-      //   // ),
+      headerLeft: () => (
+        <View style={{ marginLeft: 5 }}>
+          <TouchableOpacity
+            onPress={navigation.goBack}
+            activeOpacity={0.5}
+            style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+          >
+            <Image
+              source={require("../assets/icons8-back-24.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>Chats</Text>
+          </TouchableOpacity>
+        </View>
+      ),
     });
   }, []);
 
@@ -31,7 +41,6 @@ const NewChatScreen = ({ navigation }) => {
       alert(error.message);
     }
   };
-  console.log(input);
   return (
     <View style={styles.container}>
       <Input
@@ -41,11 +50,9 @@ const NewChatScreen = ({ navigation }) => {
         onSubmitEditing={createNewChat}
         autoFocus
         leftIcon={
-          <Icon
-            type="font-awesome"
-            name="comment"
-            size={24}
-            style={{ marginRight: 10 }}
+          <Image
+            source={require("../assets/icons8-chat-24.png")}
+            style={{ width: 20, height: 20 }}
           />
         }
       />

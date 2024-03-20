@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Avatar, Icon } from "@rneui/themed";
+import { Avatar, Icon, Image } from "@rneui/themed";
 import { addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { auth } from "../firebaseConfig";
@@ -54,7 +54,9 @@ const ChatScreen = ({ navigation, route }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <View>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
@@ -64,8 +66,21 @@ const ChatScreen = ({ navigation, route }) => {
           </Text>
         </View>
       ),
-      headerBackTitle: "Chats",
-      headerRight: () => <Icon name="more-vert" />,
+      headerLeft: () => (
+        <View style={{ marginLeft: 5 }}>
+          <TouchableOpacity
+            onPress={navigation.goBack}
+            activeOpacity={0.5}
+            style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+          >
+            <Image
+              source={require("../assets/icons8-back-24.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text>Chats</Text>
+          </TouchableOpacity>
+        </View>
+      ),
     });
   }, [navigation]);
 
@@ -78,6 +93,7 @@ const ChatScreen = ({ navigation, route }) => {
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
+            <View style={{ height: 50 }} />
             <ScrollView
               style={{
                 flex: 1,
@@ -137,7 +153,10 @@ const ChatScreen = ({ navigation, route }) => {
                 onSubmitEditing={sendMessage}
               />
               <TouchableOpacity activeOpacity={0.5} onPress={sendMessage}>
-                <Icon name="send" style={{ marginRight: 10 }} />
+                <Image
+                  source={require("../assets/icons8-send-24.png")}
+                  style={{ width: 20, height: 20, marginRight: 10 }}
+                />
               </TouchableOpacity>
             </SafeAreaView>
           </>

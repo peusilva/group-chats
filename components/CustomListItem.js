@@ -23,16 +23,22 @@ const CustomListItem = ({ id, chatName, enterChat }) => {
       limit(1)
     );
     onSnapshot(q, (snapshot) => {
-      setFirstMessage({
-        message: snapshot.docs[0].data().message,
-        displayName: snapshot.docs[0].data().displayName,
-        photoURL: snapshot.docs[0].data().photoURL,
-      });
+      if (snapshot.docs.length > 0) {
+        setFirstMessage({
+          message: snapshot.docs[0].data().message,
+          displayName: snapshot.docs[0].data().displayName,
+          photoURL: snapshot.docs[0].data().photoURL,
+        });
+      }
     });
   }, []);
   return (
     <ListItem key={id} onPress={() => enterChat(id, chatName)}>
-      <Avatar rounded source={{ uri: firstMessage.photoURL }} />
+      {firstMessage.photoURL === undefined ? (
+        <Avatar rounded source={require("./../assets/userPlaceholder.png")} />
+      ) : (
+        <Avatar rounded source={{ uri: firstMessage.photoURL }} />
+      )}
       <ListItem.Content>
         <ListItem.Title>{chatName}</ListItem.Title>
         <ListItem.Subtitle
@@ -40,9 +46,11 @@ const CustomListItem = ({ id, chatName, enterChat }) => {
           ellipsizeMode="tail"
           style={{ color: "gray" }}
         >
-          {firstMessage.displayName === auth.currentUser.displayName
-            ? `You: ${firstMessage.message}`
-            : `${firstMessage.displayName}: ${firstMessage.message}`}
+          {firstMessage.message !== undefined
+            ? firstMessage.displayName === auth.currentUser.displayName
+              ? `You: ${firstMessage.message}`
+              : `${firstMessage.displayName}: ${firstMessage.message}`
+            : "No messages yet"}
         </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>

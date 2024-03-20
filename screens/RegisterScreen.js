@@ -3,6 +3,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -15,6 +16,7 @@ import {
   updateProfile,
   getAuth,
 } from "firebase/auth";
+import { Image } from "@rneui/themed";
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -25,6 +27,21 @@ const RegisterScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Login",
+      headerLeft: () => (
+        <View style={{ marginLeft: 5 }}>
+          <TouchableOpacity
+            onPress={navigation.goBack}
+            activeOpacity={0.5}
+            style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+          >
+            <Image
+              source={require("../assets/icons8-back-24.png")}
+              style={{ width: 20, height: 20 }}
+            />
+            <Text style={{ fontWeight: "bold" }}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      ),
     });
   });
 
@@ -41,8 +58,14 @@ const RegisterScreen = ({ navigation }) => {
       .catch((error) => alert(error.message));
   };
 
+  const dimissKeyboard = () => {
+    if (Platform.OS !== "web") {
+      Keyboard.dismiss();
+    }
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={dimissKeyboard}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -86,6 +109,14 @@ const RegisterScreen = ({ navigation }) => {
           onPress={register}
           title="Register"
           raised
+        />
+        <Button
+          containerStyle={styles.button}
+          buttonStyle={{ borderRadius: 0 }}
+          titleStyle={{ color: "black" }}
+          type="outline"
+          title="Cancel"
+          onPress={navigation.goBack}
         />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
